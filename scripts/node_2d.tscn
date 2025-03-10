@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://no48wpq0obed"]
+
+[ext_resource type="Script" path="res://MyHurtBox.gd" id="1_onm86"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6p6st"]
+size = Vector2(40, 39)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Area2D" type="Area2D" parent="."]
+script = ExtResource("1_onm86")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(20, 19.5)
+shape = SubResource("RectangleShape2D_6p6st")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
