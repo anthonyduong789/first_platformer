@@ -43,8 +43,11 @@ var crouching_cshape = preload("res://resources/knight_crouching_cshape.tres")
 
 
 
-
+func _ready() -> void:
+	Global.playerBody = self
+	
 func _physics_process(delta):
+	
 	if !is_on_floor() && (can_coyote_jump == false):
 		velocity.y += gravity
 		if velocity.y > 1000:
@@ -119,7 +122,7 @@ func _physics_process(delta):
 			print("Player was stuck but he is getting up")
 	
 	var was_on_floor = is_on_floor()
-	move_and_slide()
+	
 	
 	# Started to fall
 	if was_on_floor && !is_on_floor() && velocity.y >= 0:
@@ -136,6 +139,7 @@ func _physics_process(delta):
 	if(attackTimer.is_stopped() and rollTimer.is_stopped()):
 		#print("Not attacking or rolling")	
 		update_animations(horizontal_direction)
+	move_and_slide()
 	
 
 func jump():

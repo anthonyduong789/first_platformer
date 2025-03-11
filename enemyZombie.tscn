@@ -250,9 +250,9 @@ _data = {
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6s68c"]
 
-[node name="CharacterBody2D" type="CharacterBody2D" groups=["Enemy"]]
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
 material = SubResource("ShaderMaterial_w6b5r")
-position = Vector2(1, 0)
+position = Vector2(-1, -27)
 script = ExtResource("1_2es0x")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -268,6 +268,7 @@ script = ExtResource("44_kw1sw")
 [node name="Area2D" type="Area2D" parent="AnimatedSprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Area2D"]
+visible = false
 position = Vector2(20, 70)
 shape = SubResource("RectangleShape2D_h2eb0")
 

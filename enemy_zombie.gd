@@ -12,28 +12,35 @@ var alreadyAppeared = false
 @onready var animator = $AnimatedSprite2D
 @onready var shader_material = $AnimatedSprite2D.material as ShaderMaterial
 @onready var playDectection = $RayCast2D
+@onready var Target = get_node("res://scenes/player.tscn")
 #@onready var shader_material = material as ShaderMaterial
+#@onready var playerPos = get_parent().get_parent().get_node("Player")
+var player: CharacterBody2D
 
+var speed = 15
 
 func _ready() -> void:
 	animator.play("appear")
 
-
+func _process(delta: float) -> void:
 	
-func _physics_process(delta: float) -> void:
-
 	if animator.frame == 10 and animator.animation == "appear":
 		animator.pause()
+	if !is_on_floor():
+		velocity.y += 5
 	
-	
-	if !animator.is_playing() and animator.animation == "appear":
+	if !animator.is_playing() and animator.animation == "appear":	
 		animator.play("Idle")
 		print("Idle is triggering")
 	if playDectection.is_colliding():
 		animator.play("walk")
+	move(delta)
 	
-		
-		
+
+		#print(dir_to_player.x)
+
+
+	
 		#animator.play("Idle")
 		#animator.set_animation("Idle")
 		
@@ -61,7 +68,6 @@ func _physics_process(delta: float) -> void:
 		#velocity.x = move_toward(velocity.x, 0, SPEED)
 	#hitbox.knockback_vector = velocity.normalized() #Updating the knockback vector
 
-	move_and_slide()
 
 
 	#move_and_slide()
@@ -81,6 +87,17 @@ func _physics_process(delta: float) -> void:
 		#if stats.health <= 0:
 			#state_machine.call_deferred("transition_to", "Death")
 			#health_bar.visible = false
+func move(delta):
+	player = Global.playerBody
+	var dir = global_position.direction_to(player.global_position) * speed
+	print(dir)
+	velocity.x = dir.x
+	move_and_slide()
+	
+	
+	
+	
+	
 
 func knockback(vector):
 	#print(self.position)
