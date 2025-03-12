@@ -15,8 +15,8 @@ extends CharacterBody2D
 @onready var attackTimer = $attack
 @onready var rollTimer = $roll
 #@onready var Sword = $Sprite2D/Sword/CollisionShape2D
-@onready var Sword = $Sprite2D/Sword
-@onready var SwordRotate = $Sprite2D/Sword/CollisionShape2D
+@onready var Sword = $Sprite2D/HitBox
+@onready var SwordRotate = $Sprite2D/HitBox/CollisionShape2D
 @export var SPEED = 25
 @export var normalSpeed = 50
 @export var dashSpeed = 525

@@ -15,6 +15,9 @@ var alreadyAppeared = false
 @onready var Target = get_node("res://scenes/player.tscn")
 #@onready var shader_material = material as ShaderMaterial
 #@onready var playerPos = get_parent().get_parent().get_node("Player")
+@onready var healthNode = $Health
+
+
 
 
 var player: CharacterBody2D
@@ -22,7 +25,9 @@ var player: CharacterBody2D
 var speed = 15
 
 func _ready() -> void:
+
 	animator.play("appear")
+
 
 func _process(delta: float) -> void:
 	
@@ -147,11 +152,7 @@ func toggle_shader(enable: bool):
 	
 	
 
-func _on_area_2d_area_entered(area: Area2D) -> void:
-	print("got it")
-	
-	toggle_shader(true)
-	HitStopManager.hit_stop_short()
-	await get_tree().create_timer(0.2).timeout  # Flash duration
-	toggle_shader(false)
-	pass # Replace with function body.
+
+
+func _on_health_health_depleted():
+	queue_free()

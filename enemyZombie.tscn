@@ -1,8 +1,9 @@
-[gd_scene load_steps=53 format=3 uid="uid://ousxcggy84lq"]
+[gd_scene load_steps=54 format=3 uid="uid://ousxcggy84lq"]
 
 [ext_resource type="Script" path="res://enemy_zombie.gd" id="1_2es0x"]
 [ext_resource type="Shader" path="res://shaders/HitFlash.gdshader" id="2_6uv35"]
 [ext_resource type="Texture2D" uid="uid://cr5ed3us5ic3w" path="res://assets/Archive/idle/idle_1.png" id="2_mwnf2"]
+[ext_resource type="Script" path="res://components/health.gd" id="2_n0qwa"]
 [ext_resource type="Texture2D" uid="uid://b5g4fx4m7wdrs" path="res://assets/Archive/idle/idle_2.png" id="3_hdg0g"]
 [ext_resource type="Texture2D" uid="uid://cgg1cyop18gu5" path="res://assets/Archive/idle/idle_3.png" id="4_ovbye"]
 [ext_resource type="Texture2D" uid="uid://bnv00bxtm4tc5" path="res://assets/Archive/idle/idle_4.png" id="5_gd6qc"]
@@ -44,7 +45,7 @@
 [ext_resource type="Texture2D" uid="uid://b0ixojhy4gg2g" path="res://assets/Archive/die/die_6.png" id="32_k8r4r"]
 [ext_resource type="Texture2D" uid="uid://gr70pa71dw15" path="res://assets/Archive/die/die_7.png" id="33_wecin"]
 [ext_resource type="Texture2D" uid="uid://boejlcchh1wr7" path="res://assets/Archive/die/die_8.png" id="34_nredd"]
-[ext_resource type="Script" path="res://animated_sprite_2d.gd" id="44_kw1sw"]
+[ext_resource type="Script" path="res://components/hurtbox.gd" id="47_5larc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w6b5r"]
 
@@ -237,9 +238,6 @@ animations = [{
 "speed": 10.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2eb0"]
-size = Vector2(190, 300)
-
 [sub_resource type="Animation" id="Animation_6whrc"]
 resource_name = "new_animation"
 
@@ -247,6 +245,9 @@ resource_name = "new_animation"
 _data = {
 "new_animation": SubResource("Animation_6whrc")
 }
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2eb0"]
+size = Vector2(190, 300)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6s68c"]
 size = Vector2(17, 31)
@@ -256,6 +257,9 @@ material = SubResource("ShaderMaterial_w6b5r")
 position = Vector2(-1, -27)
 script = ExtResource("1_2es0x")
 
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_n0qwa")
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_tjlt7")
 position = Vector2(-1, 11)
@@ -263,14 +267,6 @@ scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_0hu7s")
 animation = &"walk"
 frame_progress = 0.59711
-script = ExtResource("44_kw1sw")
-
-[node name="Area2D" type="Area2D" parent="AnimatedSprite2D"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Area2D"]
-position = Vector2(5.00001, 1.52588e-05)
-scale = Vector2(1, 1)
-shape = SubResource("RectangleShape2D_h2eb0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
 root_node = NodePath("../..")
@@ -278,7 +274,14 @@ libraries = {
 "": SubResource("AnimationLibrary_bb48y")
 }
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="HurtBox" type="Area2D" parent="AnimatedSprite2D" node_paths=PackedStringArray("health")]
+scale = Vector2(1, 1)
+script = ExtResource("47_5larc")
+health = NodePath("../../Health")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/HurtBox"]
+position = Vector2(5.00001, 1.52588e-05)
+shape = SubResource("RectangleShape2D_h2eb0")
 
 [node name="hitTimer" type="Timer" parent="."]
 wait_time = 0.3
@@ -294,5 +297,5 @@ scale = Vector2(0.1, 0.1)
 target_position = Vector2(-410, 0)
 collide_with_areas = true
 
-[connection signal="area_entered" from="AnimatedSprite2D/Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="timeout" from="hitTimer" to="." method="_on_hit_timer_timeout"]

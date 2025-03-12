@@ -1,7 +1,8 @@
-[gd_scene load_steps=29 format=3 uid="uid://b7fcvjqsc76qi"]
+[gd_scene load_steps=30 format=3 uid="uid://b7fcvjqsc76qi"]
 
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_wvd2u"]
 [ext_resource type="Texture2D" uid="uid://myp5xh7cj80v" path="res://assets/textures/_Idle.png" id="2_8bclm"]
+[ext_resource type="Script" path="res://components/health.gd" id="2_avt2p"]
 [ext_resource type="Script" path="res://scenes/sword.gd" id="2_ioidx"]
 [ext_resource type="Texture2D" uid="uid://bcv51lrcmoat7" path="res://assets/textures/_Run.png" id="3_2xjn2"]
 [ext_resource type="Shape2D" uid="uid://dbjso8qr63aj0" path="res://resources/knight_standing_cshape.tres" id="3_gv2j3"]
@@ -72,7 +73,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D/Sword/CollisionShape2D:disabled")
+tracks/4/path = NodePath("Sprite2D/HitBox/CollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -84,7 +85,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Sprite2D/Sword/CollisionShape2D:shape")
+tracks/5/path = NodePath("Sprite2D/HitBox/CollisionShape2D:shape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -154,7 +155,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D/Sword/CollisionShape2D:disabled")
+tracks/4/path = NodePath("Sprite2D/HitBox/CollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -166,7 +167,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("Sprite2D/Sword/CollisionShape2D:shape")
+tracks/5/path = NodePath("Sprite2D/HitBox/CollisionShape2D:shape")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -496,7 +497,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("Sprite2D/Sword/CollisionShape2D:disabled")
+tracks/4/path = NodePath("Sprite2D/HitBox/CollisionShape2D:disabled")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -685,6 +686,9 @@ _data = {
 scale = Vector2(0.7, 0.7)
 script = ExtResource("1_wvd2u")
 
+[node name="Health" type="Node" parent="."]
+script = ExtResource("2_avt2p")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -18.5714)
 shape = ExtResource("3_gv2j3")
@@ -694,11 +698,11 @@ position = Vector2(-2, -38)
 texture = ExtResource("2_8bclm")
 hframes = 10
 
-[node name="Sword" type="Area2D" parent="Sprite2D"]
+[node name="HitBox" type="Area2D" parent="Sprite2D"]
 position = Vector2(37.7143, 15.1429)
 script = ExtResource("2_ioidx")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Sword"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitBox"]
 position = Vector2(5.72205e-06, 1.42857)
 rotation = -1.09859
 scale = Vector2(1.88954, 1.03541)
@@ -744,7 +748,6 @@ one_shot = true
 [node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("14_bjf3v")
 
-[connection signal="body_entered" from="Sprite2D/Sword" to="." method="_on_sword_body_entered"]
 [connection signal="timeout" from="CoyoteTimer" to="." method="_on_coyote_timer_timeout"]
 [connection signal="timeout" from="JumpBufferTimer" to="." method="_on_jump_buffer_timer_timeout"]
 [connection signal="timeout" from="JumpHeightTimer" to="." method="_on_jump_height_timer_timeout"]
