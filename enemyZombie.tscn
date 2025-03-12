@@ -238,7 +238,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h2eb0"]
-size = Vector2(90, 160)
+size = Vector2(190, 300)
 
 [sub_resource type="Animation" id="Animation_6whrc"]
 resource_name = "new_animation"
@@ -249,6 +249,7 @@ _data = {
 }
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6s68c"]
+size = Vector2(17, 31)
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
 material = SubResource("ShaderMaterial_w6b5r")
@@ -261,15 +262,14 @@ position = Vector2(-1, 11)
 scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_0hu7s")
 animation = &"walk"
-frame = 8
-frame_progress = 0.33812
+frame_progress = 0.59711
 script = ExtResource("44_kw1sw")
 
 [node name="Area2D" type="Area2D" parent="AnimatedSprite2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatedSprite2D/Area2D"]
-visible = false
-position = Vector2(20, 70)
+position = Vector2(5.00001, 1.52588e-05)
+scale = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_h2eb0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="AnimatedSprite2D"]
@@ -285,7 +285,7 @@ wait_time = 0.3
 one_shot = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1, 16)
+position = Vector2(-0.5, 10.5)
 shape = SubResource("RectangleShape2D_6s68c")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]

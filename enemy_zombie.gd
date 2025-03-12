@@ -15,6 +15,8 @@ var alreadyAppeared = false
 @onready var Target = get_node("res://scenes/player.tscn")
 #@onready var shader_material = material as ShaderMaterial
 #@onready var playerPos = get_parent().get_parent().get_node("Player")
+
+
 var player: CharacterBody2D
 
 var speed = 15
@@ -35,7 +37,6 @@ func _process(delta: float) -> void:
 	if playDectection.is_colliding():
 		animator.play("walk")
 	move(delta)
-	
 
 		#print(dir_to_player.x)
 
@@ -52,8 +53,8 @@ func _process(delta: float) -> void:
 		#hitAnimator.play("NotHit")
 
 	# Add the gravity.
-	#if not is_on_floor():
-		#velocity += get_gravity() * delta
+	if not is_on_floor():
+		velocity += get_gravity() * delta
 
 	# Handle jump.
 	#if Input.is_action_just_pressed("ui_accept") and is_on_floor():
@@ -90,8 +91,11 @@ func _process(delta: float) -> void:
 func move(delta):
 	player = Global.playerBody
 	var dir = global_position.direction_to(player.global_position) * speed
-	print(dir)
 	velocity.x = dir.x
+	if dir.x > 0:
+		animator.flip_h = true
+	else:
+		animator.flip_h = false
 	move_and_slide()
 	
 	
