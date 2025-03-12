@@ -18,19 +18,22 @@ var alreadyAppeared = false
 @onready var healthNode = $Health
 
 
-
+@onready var health: Health = get_node("Health")
 
 var player: CharacterBody2D
 
-var speed = 15
+var speed = 30
 
 func _ready() -> void:
+	animator.play("appear")    
 
-	animator.play("appear")
+
+	
+	
 
 
 func _process(delta: float) -> void:
-	
+	health.set_health(100)
 	if animator.frame == 10 and animator.animation == "appear":
 		animator.pause()
 	if !is_on_floor():
@@ -150,9 +153,8 @@ func toggle_white_effect(enabled: bool):
 func toggle_shader(enable: bool):
 	shader_material.set_shader_parameter("effect_enabled", enable)
 	
-	
 
 
-
-func _on_health_health_depleted():
+func _on_health_health_depleted() -> void:
 	queue_free()
+	pass # Replace with function body.
