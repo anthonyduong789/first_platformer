@@ -32,3 +32,6 @@ func set_damage(value: int):
 
 func get_damage() -> int:
 	return damage
+
+func get_attack_position():
+	return player.global_position

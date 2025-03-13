@@ -694,7 +694,7 @@ position = Vector2(0, -18.5714)
 shape = ExtResource("3_gv2j3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(-2, -38)
+position = Vector2(4.76837e-07, -40)
 texture = ExtResource("2_8bclm")
 hframes = 10
 

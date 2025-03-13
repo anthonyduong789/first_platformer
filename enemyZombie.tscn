@@ -259,6 +259,7 @@ script = ExtResource("1_2es0x")
 
 [node name="Health" type="Node" parent="."]
 script = ExtResource("2_n0qwa")
+max_health = 100
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_tjlt7")
@@ -297,5 +298,10 @@ scale = Vector2(0.1, 0.1)
 target_position = Vector2(-410, 0)
 collide_with_areas = true
 
+[node name="StunTimer" type="Timer" parent="."]
+
+[connection signal="health_changed" from="Health" to="." method="_on_health_health_changed"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
+[connection signal="knockback" from="AnimatedSprite2D/HurtBox" to="." method="_on_hurt_box_knockback"]
 [connection signal="timeout" from="hitTimer" to="." method="_on_hit_timer_timeout"]
+[connection signal="timeout" from="StunTimer" to="." method="_on_stun_timer_timeout"]
