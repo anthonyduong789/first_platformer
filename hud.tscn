@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://d314uj8wemmvy"]
+
+[ext_resource type="PackedScene" uid="uid://b7qobr4eyjd0t" path="res://scenes/cooldown_buttons/AbilityButton.tscn" id="1_f3v7u"]
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="AbilityButton" parent="." instance=ExtResource("1_f3v7u")]
+offset_left = 276.0
+offset_top = 3.0
+offset_right = 340.0
+offset_bottom = 67.0
+scale = Vector2(0.679414, 0.622813)

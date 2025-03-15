@@ -146,10 +146,10 @@ tracks/3/path = NodePath("Sprite2D:frame")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.125, 0.25, 0.375),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.125, 0.25, 0.375, 0.3751),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [0, 1, 2, 3, 3]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -699,6 +699,7 @@ hframes = 10
 [node name="HitBox" type="Area2D" parent="Sprite2D"]
 position = Vector2(37.7143, 15.1429)
 script = ExtResource("2_ioidx")
+damage = null
 knockBack = 10
 knockBack_upforce = 10
 
