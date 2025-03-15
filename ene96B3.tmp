@@ -1,9 +1,8 @@
-[gd_scene load_steps=55 format=3 uid="uid://ousxcggy84lq"]
+[gd_scene load_steps=54 format=3 uid="uid://ousxcggy84lq"]
 
 [ext_resource type="Script" path="res://enemy_zombie.gd" id="1_2es0x"]
 [ext_resource type="Shader" path="res://shaders/HitFlash.gdshader" id="2_6uv35"]
 [ext_resource type="Texture2D" uid="uid://cr5ed3us5ic3w" path="res://assets/Archive/idle/idle_1.png" id="2_mwnf2"]
-[ext_resource type="Script" path="res://components/health.gd" id="2_n0qwa"]
 [ext_resource type="Texture2D" uid="uid://b5g4fx4m7wdrs" path="res://assets/Archive/idle/idle_2.png" id="3_hdg0g"]
 [ext_resource type="Texture2D" uid="uid://cgg1cyop18gu5" path="res://assets/Archive/idle/idle_3.png" id="4_ovbye"]
 [ext_resource type="Texture2D" uid="uid://bnv00bxtm4tc5" path="res://assets/Archive/idle/idle_4.png" id="5_gd6qc"]
@@ -48,6 +47,82 @@
 [ext_resource type="Script" path="res://components/hurtbox.gd" id="47_5larc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w6b5r"]
+
+[sub_resource type="GDScript" id="GDScript_fph4m"]
+script/source = "class_name Health
+extends Node
+
+
+signal max_health_changed(diff: int)
+signal health_changed(diff: int)
+signal health_depleted
+
+
+@export var max_health: int = 3 : set = set_max_health, get = get_max_health
+@export var immortality: bool = false : set = set_immortality, get = get_immortality
+
+var immortality_timer: Timer = null
+
+@onready var health: int = max_health : set = set_health, get = get_health
+
+
+func set_max_health(value: int):
+	var clamped_value = 1 if value <= 0 else value
+	
+	if not clamped_value == max_health:
+		var difference = clamped_value - max_health
+		max_health = value
+		max_health_changed.emit(difference)
+		
+		if health > max_health:
+			health = max_health
+
+
+func get_max_health() -> int:
+	return max_health
+
+
+func set_immortality(value: bool):
+	immortality = value
+
+
+func get_immortality() -> bool:
+	return immortality
+
+
+func set_temporary_immortality(time: float):
+	if immortality_timer == null:
+		immortality_timer = Timer.new()
+		immortality_timer.one_shot = true
+		add_child(immortality_timer)
+	
+	if immortality_timer.timeout.is_connected(set_immortality):
+		immortality_timer.timeout.disconnect(set_immortality)
+	
+	immortality_timer.set_wait_time(time)
+	immortality_timer.timeout.connect(set_immortality.bind(false))
+	immortality = true
+	immortality_timer.start()
+
+
+func set_health(value: int):
+	if value < health and immortality:
+		return
+	
+	var clamped_value = clampi(value, 0, max_health)
+	
+	if clamped_value != health:
+		var difference = clamped_value - health
+		health = value
+		health_changed.emit(difference)
+		
+		if health == 0:
+			health_depleted.emit()
+
+
+func get_health():
+	return health
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tjlt7"]
 shader = ExtResource("2_6uv35")
@@ -236,9 +311,33 @@ tracks/1/keys = {
 "update": 1,
 "values": [&"attack"]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionPolygon2D:build_mode")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionPolygon2D:polygon")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [PackedVector2Array(22.9881, -28.7313, 13.7928, -28.7313, 9.19522, -32.3228, 4.59761, -25.1399, 0, -19.7528, 9.19522, -7.18284, 13.7928, -3.59142, 6.89642, 23.3442, 25.2869, 23.3442, 22.9881, 1.79571, 45.9761, -19.7528, 45.9761, -26.9356, 39.0797, -25.1399, 27.5857, -30.5271)]
+}
 
 [sub_resource type="Animation" id="Animation_xtq33"]
-resource_name = "regular"
+resource_name = "Attack"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -246,10 +345,10 @@ tracks/0/path = NodePath("AnimatedSprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.6, 0.666667, 0.733333, 0.8),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0.366667, 0.433333, 0.5, 0.566667, 0.633333, 0.7, 0.766667),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [5, 2, 4, 5]
+"values": [0, 1, 2, 3, 4, 5, 6]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -258,26 +357,48 @@ tracks/1/path = NodePath("AnimatedSprite2D:animation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0.6),
+"times": PackedFloat32Array(0.366667),
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [&"attack"]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionPolygon2D:build_mode")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.366667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 0, 0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionPolygon2D:polygon")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.366667, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [PackedVector2Array(-4.59761, -23.3442, -16.0916, -21.5485, -16.0916, -28.7313, -22.9881, -21.5485, -22.9881, -14.3657, -16.0916, 1.79571, 0, 0, 6.89642, 7.18284, 4.59761, 26.9356, 25.2869, 21.5485, 18.3904, 3.59142, 9.19522, -7.18284, 20.6893, -28.7313, 11.494, -30.5271, 6.89642, -23.3442, 9.19522, -19.7528, 6.89642, -17.9571), PackedVector2Array(22.9881, -30.5271, 13.7928, -26.9356, 9.19522, -32.3228, 4.59761, -30.5271, 4.59761, -23.3442, 4.59761, -12.57, 13.7928, -3.59142, 4.59761, 25.1399, 25.2869, 25.1399, 22.9881, -1.79571, 41.3785, -10.7743, 48.2749, -23.3442, 43.6773, -26.9356, 36.7809, -25.1399), PackedVector2Array(-4.59761, -23.3442, -16.0916, -21.5485, -16.0916, -28.7313, -22.9881, -21.5485, -22.9881, -14.3657, -16.0916, 1.79571, 0, 0, 6.89642, 7.18284, 4.59761, 26.9356, 25.2869, 21.5485, 18.3904, 3.59142, 9.19522, -7.18284, 20.6893, -28.7313, 11.494, -30.5271, 6.89642, -23.3442, 9.19522, -19.7528, 6.89642, -17.9571)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rs7o3"]
 _data = {
-"RESET": SubResource("Animation_kfoxw"),
-"regular": SubResource("Animation_xtq33")
+"Attack": SubResource("Animation_xtq33"),
+"RESET": SubResource("Animation_kfoxw")
 }
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_npbg1"]
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
 material = SubResource("ShaderMaterial_w6b5r")
 script = ExtResource("1_2es0x")
 
 [node name="Health" type="Node" parent="."]
-script = ExtResource("2_n0qwa")
+script = SubResource("GDScript_fph4m")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 physics_interpolation_mode = 1
@@ -289,7 +410,6 @@ animation = &"attack"
 frame = 2
 
 [node name="HurtBox" type="Area2D" parent="AnimatedSprite2D" node_paths=PackedStringArray("health")]
-visible = false
 scale = Vector2(0.998693, 1)
 script = ExtResource("47_5larc")
 health = NodePath("../../Health")
@@ -310,14 +430,16 @@ collide_with_areas = true
 
 [node name="StunTimer" type="Timer" parent="."]
 
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+position = Vector2(-3, -14)
+scale = Vector2(0.435009, 0.556883)
+polygon = PackedVector2Array(22.9881, -28.7313, 13.7928, -28.7313, 9.19522, -32.3228, 4.59761, -25.1399, 0, -19.7528, 9.19522, -7.18284, 13.7928, -3.59142, 6.89642, 23.3442, 25.2869, 23.3442, 22.9881, 1.79571, 45.9761, -19.7528, 45.9761, -26.9356, 39.0797, -25.1399, 27.5857, -30.5271)
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_rs7o3")
 }
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-3, -10)
-shape = SubResource("RectangleShape2D_npbg1")
+autoplay = "Attack"
 
 [connection signal="imortal" from="." to="Health" method="_on_character_body_2d_imortal"]
 [connection signal="health_changed" from="Health" to="." method="_on_health_health_changed"]

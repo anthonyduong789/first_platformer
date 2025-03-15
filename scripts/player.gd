@@ -66,7 +66,7 @@ func _physics_process(delta):
 	
 	var horizontal_direction = Input.get_axis("move_left", "move_right")
 
-	if horizontal_direction != 0:
+	if horizontal_direction != 0 and rollTimer.is_stopped():
 		switch_direction(horizontal_direction)
 
 
@@ -78,9 +78,7 @@ func _physics_process(delta):
 		else:
 			dash = false
 			SPEED = normalSpeed
-
-
-
+			
 	if Input.is_action_just_pressed("roll") and rollTimer.is_stopped():
 		rollTimer.start()
 
@@ -153,13 +151,10 @@ func jump():
 		if !jump_buffered:
 			jump_buffered = true
 			jump_buffer_timer.start()
-
 func _on_coyote_timer_timeout():
 	can_coyote_jump = false
-
 func _on_jump_buffer_timer_timeout():
 	jump_buffered = false
-
 func _on_jump_height_timer_timeout():
 	if !Input.is_action_pressed("jump"):
 		if velocity.y < -100:
@@ -167,11 +162,9 @@ func _on_jump_height_timer_timeout():
 			print("Low jump")
 	else:
 		print("High jump")
-
 func above_head_is_empty() -> bool:
 	var result = !crouch_raycast1.is_colliding() && !crouch_raycast2.is_colliding()
 	return result 	
-
 func update_animations(horizontal_direction):
 	if is_on_floor():
 		if horizontal_direction == 0:
@@ -198,7 +191,6 @@ func update_animations(horizontal_direction):
 				ap.play("fall")
 		else:
 			ap.play("crouch")
-
 func switch_direction(horizontal_direction):
 	sprite.flip_h = (horizontal_direction == -1)
 	sprite.position.x = horizontal_direction * 4
@@ -212,29 +204,20 @@ func switch_direction(horizontal_direction):
 		#Sword.rotation = 0
 		Sword.position.x = -abs(Sword.position.x)
 		SwordRotate.rotation = abs(SwordRotate.rotation)
-	
-	
-	
-	
 func attack():
 	ap.play("attack")
 	is_attacking = true
 	print("Attack")
 	audioPlayer.play()
-
-
 func roll():
 	ap.play("roll")
 	is_roll = true
-	print("Roll")
-
 func crouch():
 	if is_crouching:
 		return
 	is_crouching = true
 	cshape.shape = crouching_cshape
 	cshape.position.y = -12
-
 func stand():
 	if is_crouching == false:
 		return
