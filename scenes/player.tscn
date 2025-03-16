@@ -699,9 +699,9 @@ hframes = 10
 [node name="HitBox" type="Area2D" parent="Sprite2D"]
 position = Vector2(37.7143, 15.1429)
 script = ExtResource("2_ioidx")
-damage = null
-knockBack = 10
-knockBack_upforce = 10
+damage = 2
+knockBack = 30
+knockBack_upforce = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/HitBox"]
 position = Vector2(5.72205e-06, 1.42857)

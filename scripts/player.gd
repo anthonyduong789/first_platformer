@@ -13,6 +13,7 @@ extends CharacterBody2D
 @onready var jump_buffer_timer = $JumpBufferTimer
 @onready var jump_height_timer = $JumpHeightTimer
 @onready var attackTimer = $attack
+# @onready var attackTimer = Global.attackTimer
 @onready var rollTimer = $roll
 #@onready var Sword = $Sprite2D/Sword/CollisionShape2D
 @onready var Sword = $Sprite2D/HitBox
@@ -36,18 +37,15 @@ var is_roll = false
 var rollDirection = 1
 
 
-
-
 var standing_cshape = preload("res://resources/knight_standing_cshape.tres")
 var crouching_cshape = preload("res://resources/knight_crouching_cshape.tres")
 
-
-
 func _ready() -> void:
 	Global.playerBody = self
+	Global.attackTimer = attackTimer
 	
 func _physics_process(delta):
-	
+	print(attackTimer.is_stopped())
 	if !is_on_floor() && (can_coyote_jump == false):
 		velocity.y += gravity
 		if velocity.y > 1000:
