@@ -15,6 +15,7 @@ extends CharacterBody2D
 @onready var attackTimer = $attack
 # @onready var attackTimer = Global.attackTimer
 @onready var rollTimer = $roll
+@onready var CharacterCollision = $CollisionShape2D
 #@onready var Sword = $Sprite2D/Sword/CollisionShape2D
 @onready var Sword = $Sprite2D/HitBox
 @onready var SwordRotate = $Sprite2D/HitBox/CollisionShape2D
@@ -43,13 +44,32 @@ var crouching_cshape = preload("res://resources/knight_crouching_cshape.tres")
 func _ready() -> void:
 	Global.playerBody = self
 	Global.attackTimer = attackTimer
+
+func create_ghosting(tx_pos, tx_scale):
+	var new_ghost: Sprite2D = sprite.duplicate()
 	
+	get_tree().current_scene.add_child(new_ghost)
+	new_ghost.position = self.position 
+	#new_ghost.centered = true
+	new_ghost.scale = tx_scale
+	var tween_fade = new_ghost.create_tween()
+	tween_fade.tween_property(self, "self_modulate",Color(1, 1, 1, 0), 0.75 )
+	await tween_fade.finished
+	new_ghost.queue_free()
+	
+
+
 func _physics_process(delta):
-	print(attackTimer.is_stopped())
+	
+	#+ sprite.global_position
+	#print("position", position)d
+	#print("sprite position", sprite.a)
+	create_ghosting(position, scale)
+	
 	if !is_on_floor() && (can_coyote_jump == false):
 		velocity.y += gravity
 		if velocity.y > 1000:
-			velocity.y = 1000
+			velocity.y = 1000 
 	
 	if is_on_floor():
 		inAir = false
@@ -164,6 +184,7 @@ func above_head_is_empty() -> bool:
 	var result = !crouch_raycast1.is_colliding() && !crouch_raycast2.is_colliding()
 	return result 	
 func update_animations(horizontal_direction):
+
 	if is_on_floor():
 		if horizontal_direction == 0:
 			if is_crouching:
@@ -208,17 +229,24 @@ func attack():
 	print("Attack")
 	audioPlayer.play()
 func roll():
+
 	ap.play("roll")
 	is_roll = true
+
+#func temp_disable_enemyCollision():
+	#for other in get_tree().get_nodes_in_group("Enemy"):
+		#other.character_collision.set_deferred("disabled", true)
 func crouch():
 	if is_crouching:
 		return
 	is_crouching = true
-	cshape.shape = crouching_cshape
-	cshape.position.y = -12
+	#TODO: Fix crouch
+	#cshape.shape = crouching_cshape
+	#cshape.position.y = 8
+	
 func stand():
 	if is_crouching == false:
 		return
 	is_crouching = false
-	cshape.shape = standing_cshape
-	cshape.position.y = -16
+	#cshape.shape = standing_cshape
+	#cshape.position.y = -16

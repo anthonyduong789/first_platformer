@@ -13,6 +13,7 @@ var alreadyAppeared = false
 @onready var shader_material = $AnimatedSprite2D.material as ShaderMaterial
 @onready var playDectection = $RayCast2D
 @onready var Target = get_node("res://scenes/player.tscn")
+
 #@onready var shader_material = material as ShaderMaterial
 #@onready var playerPos = get_parent().get_parent().get_node("Player")
 @onready var healthNode = $Health
@@ -101,7 +102,8 @@ func create_white_texture(width, height):
 	return texture
 func toggle_white_effect(enabled: bool):
 	if enabled:
-		print(animator.material)
+		#print(animator.material)
+		pass
 	else:
 		animator.material = null
 func toggle_shader(enable: bool):
@@ -113,7 +115,7 @@ func _on_health_health_changed(diff: int) -> void:
 	toggle_shader(true)
 	speed = 0
 	HitStopManager.hit_stop_short()
-	await get_tree().create_timer(0.2).timeout  # Flash duration
+	await get_tree().create_timer(0.4).timeout  # Flash duration
 	speed = 30
 	toggle_shader(false)
 	pass # Replace with function body.
@@ -135,6 +137,7 @@ func _on_hurt_box_knockback(strength: int, enemy_pos: Vector2, up_force:float) -
 		knockback(strength, enemy_pos.x, up_force)
 
 
+	
 
 func stun(duration):
 	is_stunned = true

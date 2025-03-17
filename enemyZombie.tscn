@@ -274,6 +274,8 @@ _data = {
 
 [node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
 material = SubResource("ShaderMaterial_w6b5r")
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_2es0x")
 
 [node name="Health" type="Node" parent="."]
@@ -288,8 +290,7 @@ sprite_frames = SubResource("SpriteFrames_0hu7s")
 animation = &"attack"
 frame = 2
 
-[node name="HurtBox" type="Area2D" parent="AnimatedSprite2D" node_paths=PackedStringArray("health")]
-visible = false
+[node name="HurtBox" type="Area2D" parent="AnimatedSprite2D" node_paths=PackedStringArray("health") groups=["Enemy"]]
 scale = Vector2(0.998693, 1)
 script = ExtResource("47_5larc")
 health = NodePath("../../Health")
@@ -320,6 +321,7 @@ position = Vector2(-3, -10)
 shape = SubResource("RectangleShape2D_npbg1")
 
 [connection signal="imortal" from="." to="Health" method="_on_character_body_2d_imortal"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
 [connection signal="health_changed" from="Health" to="." method="_on_health_health_changed"]
 [connection signal="health_depleted" from="Health" to="." method="_on_health_health_depleted"]
 [connection signal="knockback" from="AnimatedSprite2D/HurtBox" to="." method="_on_hurt_box_knockback"]

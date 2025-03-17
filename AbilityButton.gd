@@ -19,7 +19,6 @@ func _process(delta):
 	$Sweep.value = int(($Timer.time_left / cooldown) * 100)
 
 func _on_Timer_timeout():
-	print("ability ready")
 	$Sweep.value = 0
 	time_label.hide()
 
@@ -28,4 +27,3 @@ func _on_Timer_timeout():
 func _on_AbilityButton_pressed():
 	$Timer.start()
 	time_label.show()
-	print("triggered reload")

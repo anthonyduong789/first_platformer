@@ -725,13 +725,13 @@ script = ExtResource("1_wvd2u")
 [node name="Health" type="Node" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-4.28571, 20)
+position = Vector2(-4.57143, -20.7143)
 shape = ExtResource("3_gv2j3")
 one_way_collision_margin = 0.0
 debug_color = Color(0.936497, 1.75196e-05, 0.631959, 0.42)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(2.84217e-14, -3.8147e-06)
+position = Vector2(4.76837e-07, -40)
 texture = ExtResource("2_8bclm")
 hframes = 10
 
@@ -757,11 +757,11 @@ libraries = {
 autoplay = "idle"
 
 [node name="CrouchRaycast_1" type="RayCast2D" parent="."]
-position = Vector2(-11.4286, 15.7143)
+position = Vector2(-8, -16)
 target_position = Vector2(0, -16)
 
 [node name="CrouchRaycast_2" type="RayCast2D" parent="."]
-position = Vector2(3.57143, 15.7143)
+position = Vector2(7, -16)
 target_position = Vector2(0, -16)
 
 [node name="CoyoteTimer" type="Timer" parent="."]
