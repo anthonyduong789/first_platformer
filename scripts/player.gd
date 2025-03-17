@@ -240,13 +240,12 @@ func crouch():
 	if is_crouching:
 		return
 	is_crouching = true
-	#TODO: Fix crouch
-	#cshape.shape = crouching_cshape
-	#cshape.position.y = 8
+	cshape.shape = crouching_cshape
+	cshape.position.y = 26
 	
 func stand():
 	if is_crouching == false:
 		return
 	is_crouching = false
-	#cshape.shape = standing_cshape
-	#cshape.position.y = -16
+	cshape.shape = standing_cshape
+	cshape.position.y = 20
