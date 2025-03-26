@@ -1,17 +1,17 @@
 [gd_scene load_steps=17 format=4 uid="uid://bfth6655givai"]
 
 [ext_resource type="PackedScene" uid="uid://b7fcvjqsc76qi" path="res://scenes/player.tscn" id="1_3854l"]
-[ext_resource type="Script" path="res://scenes/World.gd" id="1_evpcw"]
+[ext_resource type="Script" uid="uid://c00lql4lyjhgm" path="res://scenes/World.gd" id="1_evpcw"]
 [ext_resource type="Texture2D" uid="uid://dvntd6ccrpn8p" path="res://assets/backgrounds/parallax_mountain_pack/layers/bg-no-clouds.png" id="2_mcwbr"]
 [ext_resource type="Texture2D" uid="uid://h87k3k2c8k8f" path="res://assets/backgrounds/parallax_mountain_pack/layers/parallax-mountain-montain-far.png" id="3_at8dk"]
 [ext_resource type="Texture2D" uid="uid://sx1qqgoqihkr" path="res://assets/textures/forest_platformer_tileset.png" id="3_vukfd"]
 [ext_resource type="Texture2D" uid="uid://cx042dgjkutrs" path="res://assets/backgrounds/parallax_mountain_pack/layers/parallax-mountain-mountains.png" id="4_8ffd6"]
 [ext_resource type="Texture2D" uid="uid://dugv0fd4nviru" path="res://assets/backgrounds/parallax_mountain_pack/layers/parallax-mountain-trees.png" id="5_1bw1q"]
 [ext_resource type="Texture2D" uid="uid://bc642ipmqwcxj" path="res://assets/backgrounds/parallax_mountain_pack/layers/parallax-mountain-foreground-trees.png" id="7_1udva"]
-[ext_resource type="Script" path="res://scenes/parallax_layer.gd" id="7_5tfwq"]
+[ext_resource type="Script" uid="uid://tyqn06vuwax4" path="res://scenes/parallax_layer.gd" id="7_5tfwq"]
 [ext_resource type="Texture2D" uid="uid://bt1nt62hcgg66" path="res://assets/backgrounds/parallax_mountain_pack/layers/parallax-mountain-clouds.png" id="7_n7a7y"]
 [ext_resource type="PackedScene" uid="uid://575h38kmwkhn" path="res://PlayerGhostDash.tscn" id="12_0b456"]
-[ext_resource type="Script" path="res://scenes/node_2d.gd" id="12_djer8"]
+[ext_resource type="Script" uid="uid://qqkmuqd8d6bb" path="res://scenes/node_2d.gd" id="12_djer8"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_sl8bq"]
 resource_name = "<null>"

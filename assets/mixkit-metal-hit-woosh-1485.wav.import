@@ -3,11 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cayjr7qr047pe"
-valid=false
+path="res://.godot/imported/mixkit-metal-hit-woosh-1485.wav-a24f53990dcc5e53f80b7d1c1439086f.sample"
 
 [deps]
 
 source_file="res://assets/mixkit-metal-hit-woosh-1485.wav"
+dest_files=["res://.godot/imported/mixkit-metal-hit-woosh-1485.wav-a24f53990dcc5e53f80b7d1c1439086f.sample"]
 
 [params]
 

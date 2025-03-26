@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://575h38kmwkhn"]
 
 [ext_resource type="Texture2D" uid="uid://vxukr7p3xnyv" path="res://assets/textures/FreeKnight_v1/Colour1/Outline/120x80_PNGSheets/_Dash.png" id="1_32eql"]
-[ext_resource type="Script" path="res://Ghost.gd" id="2_yx77f"]
+[ext_resource type="Script" uid="uid://wrneiha1xi8f" path="res://Ghost.gd" id="2_yx77f"]
 
 [node name="Sprite2D" type="Sprite2D"]
 position = Vector2(1, -16)

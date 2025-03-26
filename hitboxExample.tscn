@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cosel64ky01m1"]
 
-[ext_resource type="Script" path="res://components/hurtbox.gd" id="1_0xxyn"]
+[ext_resource type="Script" uid="uid://c2dyxxvtmotec" path="res://components/hurtbox.gd" id="1_0xxyn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_m08rc"]
 size = Vector2(34, 34)

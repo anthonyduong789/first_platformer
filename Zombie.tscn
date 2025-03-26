@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://bnv00bxtm4tc5" path="res://assets/Archive/idle/idle_4.png" id="4_pudns"]
 [ext_resource type="Texture2D" uid="uid://bp1pbpoajt28r" path="res://assets/Archive/idle/idle_5.png" id="5_ph8b4"]
 [ext_resource type="Texture2D" uid="uid://casrwdb0b7l0" path="res://assets/Archive/idle/idle_6.png" id="6_1hq3n"]
-[ext_resource type="Script" path="res://scripts/zombie.gd" id="7_gcyk2"]
+[ext_resource type="Script" uid="uid://cn8kdino0rbu2" path="res://scripts/zombie.gd" id="7_gcyk2"]
 [ext_resource type="Texture2D" uid="uid://bpoikki6bcphi" path="res://assets/Archive/walk/go_1.png" id="7_kk6tv"]
 [ext_resource type="Texture2D" uid="uid://baytsoijdc4jj" path="res://assets/Archive/attack/hit_1.png" id="7_wqee4"]
 [ext_resource type="Texture2D" uid="uid://m8hgw46dj6xw" path="res://assets/Archive/walk/go_2.png" id="8_4eal8"]
@@ -24,7 +24,7 @@
 [ext_resource type="Texture2D" uid="uid://ckuesf0eb7b04" path="res://assets/Archive/walk/go_8.png" id="14_x4myx"]
 [ext_resource type="Texture2D" uid="uid://drs7qjacr6qhu" path="res://assets/Archive/walk/go_9.png" id="15_ka7c5"]
 [ext_resource type="Texture2D" uid="uid://ckeb7syxgh44c" path="res://assets/Archive/walk/go_10.png" id="16_v3ehr"]
-[ext_resource type="Script" path="res://hurtbox.gd" id="25_wsio4"]
+[ext_resource type="Script" uid="uid://4el8clp1wro8" path="res://hurtbox.gd" id="25_wsio4"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_nr6oc"]
 

@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dxv5o2532r02v"]
 
-[ext_resource type="Script" path="res://scripts/enemyHitBox.gd" id="1_tejdp"]
+[ext_resource type="Script" uid="uid://dev7gt0jn7noh" path="res://scripts/enemyHitBox.gd" id="1_tejdp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vxx2j"]
 
