@@ -1,6 +1,5 @@
 extends CharacterBody2D
 
-@export var speed = 6000
 @export var gravity = 5
 @export var jump_force = 200
 
@@ -18,18 +17,22 @@ extends CharacterBody2D
 @onready var CharacterCollision = $CollisionShape2D
 @onready var Sword = $Sprite2D/HitBox
 @onready var SwordRotate = $Sprite2D/HitBox/CollisionShape2D
+
+@export var current_speed = 25
 @export var SPEED = 25
 @export var normalSpeed = 50
-@onready var dashTimer = $dash
 
 #region Dash variables
 @export var dash_time: float = 0.2
 @export var dash_cooldown: float = 1.0
-@export var dashSpeed = 525
+@export var dashSpeed = 325
 var is_dashing: bool = false
 var can_dash: bool = true
 var dash_timer: float = 0.0
 var cooldown_timer: float = 0.0
+const dash_duration = 0.2
+@onready var dash = $Dash
+
 
 #endregion
 
@@ -103,11 +106,18 @@ func _physics_process(delta):
 		switch_direction(horizontal_direction)
 
 
-	if(rollTimer.is_stopped() || inAir):
-		velocity.x = normalSpeed * horizontal_direction
+	if is_dashing:
+		current_speed = dashSpeed
 	else:
-		velocity.x =  200 * (-1 if sprite.flip_h else 1)
+		current_speed = normalSpeed
 
+	
+	velocity.x = current_speed * horizontal_direction
+	
+	
+	if is_roll:
+		velocity.x =  dashSpeed * (-1 if sprite.flip_h else 1)
+	
 	
 	if stuck_under_object && above_head_is_empty():
 		if !Input.is_action_pressed("crouch"):
@@ -155,9 +165,9 @@ func handle_Input():
 			if stuck_under_object != true:
 				stuck_under_object = true
 				print("Player stuck, setting stuck_under_object to true")
-	elif Input.is_action_just_pressed("dash"):
-		dashTimer.start()
-		dash()
+	# elif Input.is_action_just_pressed("dash") and dashTimer.is_stopped():
+	# 	dashTimer.start()
+	# 	dash()
 	if Input.is_action_just_pressed("roll") and rollTimer.is_stopped():
 		rollTimer.start()
 		if sprite.flip_h == true:
@@ -165,6 +175,14 @@ func handle_Input():
 		else:
 			rollDirection = 1
 		roll()
+	if Input.is_action_just_pressed("dash") && !dash.is_dashing() && dash.can_dash:
+		dash_animation()
+		var dash_direction = 1  # Default to right
+		if sprite.flip_h:
+			dash_direction = -1  # Move left if flipped
+		
+		dash.start_dash(sprite, dash_duration, dash_direction)
+
 func jump():
 	if is_on_floor() || can_coyote_jump:
 		velocity.y = -jump_force
@@ -176,22 +194,11 @@ func jump():
 		if !jump_buffered:
 			jump_buffered = true
 			jump_buffer_timer.start()
-func _on_coyote_timer_timeout():
-	can_coyote_jump = false
-func _on_jump_buffer_timer_timeout():
-	jump_buffered = false
-func _on_jump_height_timer_timeout():
-	if !Input.is_action_pressed("jump"):
-		if velocity.y < -100:
-			velocity.y = -100
-			print("Low jump")
-	else:
-		print("High jump")
+
 func above_head_is_empty() -> bool:
 	var result = !crouch_raycast1.is_colliding() && !crouch_raycast2.is_colliding()
 	return result 	
 func update_animations(horizontal_direction):
-
 	if is_on_floor():
 		if horizontal_direction == 0:
 			if is_crouching:
@@ -205,9 +212,6 @@ func update_animations(horizontal_direction):
 				if is_roll:
 					ap.play("is_roll")
 					print("is_roll")
-				# if dash:
-				# 	ap.play("dash")
-				# else:
 				if is_dashing:
 					ap.play("dash")
 					print('is dashing')
@@ -258,11 +262,32 @@ func stand():
 	cshape.shape = standing_cshape
 	cshape.position.y = 19.643
 
-func dash():
+func dash_animation():
 	ap.play("dash")
 	is_dashing = true
 
 
+
+
+
+#region Timer End Effects
+func _on_coyote_timer_timeout():
+	can_coyote_jump = false
+func _on_jump_buffer_timer_timeout():
+	jump_buffered = false
+func _on_jump_height_timer_timeout():
+	if !Input.is_action_pressed("jump"):
+		if velocity.y < -100:
+			velocity.y = -100
+			print("Low jump")
+	else:
+		print("High jump")
 func _on_roll_timeout() -> void:
 	is_roll = false
 	pass # Replace with function body.
+
+func _on_dash_dash_ended() -> void:
+	is_dashing = false
+	pass # Replace with function body.
+
+#endregion
