@@ -1,0 +1,83 @@
+[gd_scene load_steps=12 format=3 uid="uid://hh3hadtaeoni"]
+
+[ext_resource type="Script" uid="uid://b2ncdjshlw2mv" path="res://Dash.gd" id="1"]
+[ext_resource type="Texture2D" uid="uid://cyvpybrfocvni" path="res://dust.png" id="2"]
+
+[sub_resource type="CanvasItemMaterial" id="1"]
+particles_animation = true
+particles_anim_h_frames = 5
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id="2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="3"]
+curve = SubResource("2")
+
+[sub_resource type="Gradient" id="7"]
+offsets = PackedFloat32Array(0.456395, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.0980392)
+
+[sub_resource type="GradientTexture2D" id="8"]
+gradient = SubResource("7")
+
+[sub_resource type="ParticleProcessMaterial" id="9"]
+lifetime_randomness = 0.7
+emission_shape = 1
+emission_sphere_radius = 5.0
+spread = 40.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.0
+scale_max = 0.0
+color_ramp = SubResource("8")
+anim_speed_curve = SubResource("3")
+
+[sub_resource type="Gradient" id="4"]
+offsets = PackedFloat32Array(0.438953, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.0980392)
+
+[sub_resource type="GradientTexture2D" id="5"]
+gradient = SubResource("4")
+
+[sub_resource type="ParticleProcessMaterial" id="6"]
+lifetime_randomness = 0.7
+gravity = Vector3(0, 0, 0)
+scale_min = 0.0
+scale_max = 0.0
+color_ramp = SubResource("5")
+anim_speed_curve = SubResource("3")
+
+[node name="Dash" type="Node2D"]
+script = ExtResource("1")
+
+[node name="DurationTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="GhostTimer" type="Timer" parent="."]
+wait_time = 0.05
+
+[node name="DustBurst" type="GPUParticles2D" parent="."]
+z_index = -1
+material = SubResource("1")
+emitting = false
+amount = 10
+texture = ExtResource("2")
+lifetime = 0.01
+explosiveness = 1.0
+process_material = SubResource("9")
+
+[node name="DustTrail" type="GPUParticles2D" parent="."]
+visible = false
+z_index = -1
+material = SubResource("1")
+emitting = false
+texture = ExtResource("2")
+lifetime = 1.2
+one_shot = true
+explosiveness = 0.8
+process_material = SubResource("6")
+
+[connection signal="timeout" from="DurationTimer" to="." method="_on_DurationTimer_timeout"]
+[connection signal="timeout" from="GhostTimer" to="." method="_on_GhostTimer_timeout"]

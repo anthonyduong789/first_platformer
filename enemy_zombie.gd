@@ -1,6 +1,9 @@
 extends CharacterBody2D
 
 
+
+
+
 const SPEED = 300.0
 const JUMP_VELOCITY = -400.0
 var alreadyAppeared = false
@@ -114,7 +117,7 @@ func _on_health_health_depleted() -> void:
 func _on_health_health_changed(diff: int) -> void:
 	toggle_shader(true)
 	speed = 0
-	HitStopManager.hit_stop_short()
+	# HitStopManager.hit_stop_short()
 	await get_tree().create_timer(0.4).timeout  # Flash duration
 	speed = 30
 	toggle_shader(false)

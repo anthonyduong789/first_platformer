@@ -1,0 +1,29 @@
+TODO
+
+
+
+
+[x] Make the dash stop falling and animation/ pause it as the character will only go to the horizontal funciton it's facing
+
+[] Adjust the jumping with the gravity
+
+
+
+
+
+
+
+
+will 1
+
+
+will 2
+
+
+will 3
+
+
+will 4
+
+
+will 5

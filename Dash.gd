@@ -1,13 +1,11 @@
 extends Node2D
-
-signal dash_ended
-
 const dash_delay = 0.4
 
 @onready var duration_timer = $DurationTimer
 @onready var ghost_timer = $GhostTimer
 @onready var dust_trail = $DustTrail
 @onready var dust_burst = $DustBurst
+@onready var pause_falling: Signal
 
 var ghost_scene = preload("res://DashGhost.tscn")
 var can_dash = true
